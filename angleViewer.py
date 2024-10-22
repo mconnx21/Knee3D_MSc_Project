@@ -204,7 +204,7 @@ circumcirleRadius = findCircumcircle(filledVolume)
 #padVolume expects a volume which has even dpeth and width - need to come back here and write a function to pad the filledVolume to even if not
 paddedvolume = padVolume(filledVolume, circumcirleRadius)
 print(paddedvolume.shape)
-theta  = -math.pi/2  #note -math.pi/2 + math.pi/16 is perfect elligned coronal for patient 3. -math.pi/2 is coronal which matches radiant viewe
+theta  = -math.pi/2+math.pi/16  #note -math.pi/2 + math.pi/16 is perfect elligned coronal for patient 3. -math.pi/2 is coronal which matches radiant viewe
 pdepth = paddedvolume.shape[0]
 #theta = math.pi/4
 #slices = generateSlices(theta, paddedvolume, int(pdepth/4) , 3*int(pdepth/4), 25)
