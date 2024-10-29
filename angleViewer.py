@@ -214,7 +214,7 @@ theta  = -math.pi/2+math.pi/16  #note -math.pi/2 + math.pi/16 is perfect elligne
 pdepth = paddedvolume.shape[0]
 #theta = math.pi/4
 #slices = generateSlices(theta, paddedvolume, int(pdepth/4) , 3*int(pdepth/4), 25)
-slices = generateSlices(theta, paddedvolume, 100, 120, 10)
+slices = generateSlices(theta, paddedvolume, 200, 300, 10)
 path = Path("angleViewer_slices\\"+patientID)  #it will be better to later extend this to make subfolders based on angles
 path.mkdir(parents= True, exist_ok = True)
 os.chdir(path)
