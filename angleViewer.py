@@ -13,6 +13,8 @@ from sliceBetweenPoints import loadDicom, fillGaps, displayASlice
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2
+import os
+from pathlib import Path
 
 def generateCirclePixelsByDepth(centre, radius):
     #2*radius is the number of pixels in the diameter. So the centre lies between four neighbouring, and so is marked by the top left corner of the 4th quadrant pixel
@@ -196,7 +198,11 @@ patient1 = "oai\\Package_1216539_samples\\1.C.2\\9911221\\20050909\\10583703"
 patient2 = "oai\\Package_1216539_samples\\1.C.2\\9911721\\20050812\\10478403"
 patient3 = "oai\\Package_1216539_samples\\1.C.2\\9947240\\20051013\\10200003"
 
-DCMArrays, sliceThicknessSaggital, distanceBetweenZSaggital, distanceBetweenYSaggital, depth, height, width= loadDicom(patient3)
+patient = patient3
+patientID = patient[34: len(patient)]
+print(patientID)
+
+DCMArrays, sliceThicknessSaggital, distanceBetweenZSaggital, distanceBetweenYSaggital, depth, height, width= loadDicom(patient)
 filledVolume = fillGaps(DCMArrays, int(round( sliceThicknessSaggital/distanceBetweenZSaggital,0)))
 fvDepth, fvHeight, fvWidth = filledVolume.shape
 circumcirleRadius = findCircumcircle(filledVolume)
@@ -208,10 +214,14 @@ theta  = -math.pi/2+math.pi/16  #note -math.pi/2 + math.pi/16 is perfect elligne
 pdepth = paddedvolume.shape[0]
 #theta = math.pi/4
 #slices = generateSlices(theta, paddedvolume, int(pdepth/4) , 3*int(pdepth/4), 25)
-slices = generateSlices(theta, paddedvolume, 100, 400, 10)
+slices = generateSlices(theta, paddedvolume, 200, 300, 10)
+path = Path("angleViewer_slices\\"+patientID)  #it will be better to later extend this to make subfolders based on angles
+path.mkdir(parents= True, exist_ok = True)
+os.chdir(path)
 
 for k in range (0, len(slices)):
-    cv2.imwrite(str(k)+".png", slices[k])
+
+    cv2.imwrite(str(k) + ".png", slices[k])
     displayASlice(slices[k])
 
 
